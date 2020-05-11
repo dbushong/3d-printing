@@ -1,9 +1,15 @@
-addBase = false;
+/* Floating Sheep Studios Logo */
 
+/* [Base] */
+addBase = false;
+baseThickness = 0.5;
+
+/* [Dimensions] */
 logoWidth = 30;
 logoHeight = 1;
+
+/* [Hidden] */
 dxfWidth = 25;
-baseThickness = 0.5;
 $fn = 100;
 
 module logo(w = logoWidth, h = logoHeight) {
