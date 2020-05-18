@@ -42,7 +42,7 @@ difference() {
     rotate([0, 0, 90])
     translate([0, 0, bottomShaftHeight - screwHeight])
     metric_thread(
-      diameter = screwOuterDiameter,
+      diameter = screwOuterDiameter + 0.5,
       pitch = (screwOuterDiameter - screwInnerDiameter) / 1.082532,
       length = screwHeight
     );
