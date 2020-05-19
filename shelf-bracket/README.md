@@ -9,6 +9,8 @@ Printing:
 * Adhesion: Brim
 * Support: on
 * Orientation: thin side of long edge on the plate
+* Quality: whatever
+* Material: PETG
 
 ![one](1.jpg)
 ![two](2.jpg)
