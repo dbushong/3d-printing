@@ -1,17 +1,31 @@
+// Blind Rotating Screw Part
+
+/* [Bottom Shaft] */
 bottomShaftHeight = 58;
+bottomShaftDiameter = 5.85;
+
+/* [Top Shaft] */
+topShaftHeight = 3.75;
+topShaftDiameter = 4;
+
+/* [Screw] */
 screwHeight = 9.5;
 screwInnerDiameter = 8.75;
 screwOuterDiameter = 12.5;
-screwRotations = 3;
-screwTaperRatio = 0.25;
-topShaftHeight = 3.75;
-bottomShaftDiameter = 5.85;
-topShaftDiameter = 4;
+// to account for wear
+widthPadding = 1; // [0:0.25:2]
+screwPitch = (screwOuterDiameter - screwInnerDiameter) / 1.082532;
+
+/* [Collar] */
 collarDiameter = 8;
 collarYPos = 45;
 collarHeight = 1;
+
+/* [Pin Hole] */
 holeDiameter = 2;
 holeYPos = 10.5;
+
+/* [Hidden] */
 $fn = 75;
 
 use <threads.scad>;
@@ -42,8 +56,8 @@ difference() {
     rotate([0, 0, 90])
     translate([0, 0, bottomShaftHeight - screwHeight])
     metric_thread(
-      diameter = screwOuterDiameter + 0.5,
-      pitch = (screwOuterDiameter - screwInnerDiameter) / 1.082532,
+      diameter = screwOuterDiameter + widthPadding,
+      pitch = screwPitch,
       length = screwHeight
     );
   }
