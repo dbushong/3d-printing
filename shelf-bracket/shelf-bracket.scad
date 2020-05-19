@@ -124,7 +124,6 @@ module peg() {
   }
 }
 
-// TODO: add retention tab
 body();
 shelf();
 peg();
