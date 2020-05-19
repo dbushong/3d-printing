@@ -12,14 +12,15 @@ shelfSupportThickness = 1;
 shelfSupportHeight = 10;
 shelfSupportDepth = 10;
 shelfInset = 3;
-shelfRoundRadius = 1;
+shelfRoundRadius = 2;
 
 /* [Retention Tab] */
 tabWidth = 10;
-tabHeight = 25;
-tabAngle = 10;
+tabHeight = 24.5;
+tabAngle = 10; // [1:45]
 
 /* [Peg] */
+// how fat the peg going into the desk is
 pegDiameter = 6;
 pegLength = 7;
 
