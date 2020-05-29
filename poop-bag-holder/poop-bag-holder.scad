@@ -1,36 +1,65 @@
+roundRectRad = 0.5;
 thickness = 3;
 bigCircleDiam = 50;
 smallCircleDiam = 0;
 bagNeckGap = 5;
 bagNeckLength = 50;
-neckCircleFudge = 0.37;
+neckCircleFudge = 0.35;
 
 /* [Hidden] */
 $fn = 50;
 
+module roundedSquare(w) {
+  for (rot = [0:90:270]) {
+    rotate([0, 0, rot]) {
+      difference() {
+        square([w/2, w/2]);
+        translate([w/2-roundRectRad, w/2-roundRectRad, 0])
+          square([roundRectRad+1, roundRectRad+1]);
+      }
+      translate([w/2-roundRectRad, w/2-roundRectRad, 0])
+        circle(r = roundRectRad);
+    }
+  }
+}
+
+module rsCorner(w) {
+  rotate_extrude(angle=90) {
+    difference() {
+      roundedSquare(w);
+      translate([0, -w, 0]) square([w*2, w*2]);
+    }
+  }
+}
+
+module rsCylinder(w, h) {
+  linear_extrude(height=h) {
+    roundedSquare(w);
+  }
+}
+
 module ring(d, angle=360) {
   rotate_extrude(angle = angle) {
     translate([(d + thickness) / 2, 0, 0])
-      circle(d = thickness);
+      roundedSquare(w = thickness);
   }  
-}
-
-module slotSide() {
-  translate([-(bagNeckGap + thickness)/2, 0, 0]) {
-    cylinder(d = thickness, h = bagNeckLength);
-    translate([0, 0, bagNeckLength])
-      sphere(d = thickness);
-  }
-  rotate([-90, 90, 0])
-    ring(d = bagNeckGap, angle=90);
 }
 
 module slot() {
   rotate([-90, 0, 0]) {
-    slotSide();
-    rotate([0, 0, 180])
-    slotSide();
-  }
+    for (rot = [0, 180]) {
+      rotate([0, 0, rot]) {
+        translate([-(bagNeckGap + thickness)/2, 0, 0]) {
+          rsCylinder(w = thickness, h = bagNeckLength);
+          translate([0, 0, bagNeckLength])
+          rotate([-90, 0, -180])
+          rsCorner(w = thickness);
+        }
+        rotate([-90, 90, 0])
+          ring(d = bagNeckGap, angle=90);
+      }
+    }
+  } 
 }
 
 module bigCircleHole() {
