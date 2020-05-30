@@ -7,7 +7,8 @@ bagNeckLength = 50;
 neckCircleFudge = 0.35;
 
 /* [Hidden] */
-$fn = 50;
+$fa = 1;
+$fs = 0.1;
 
 module roundedSquare(w) {
   for (rot = [0:90:270]) {
