@@ -1,8 +1,9 @@
-mode = "dinnerForks"; // ["dinnerForks","teaspoons","tablespoons","saladForks"]
+mode = "saladForks"; // ["dinnerForks","teaspoons","tablespoons","saladForks"]
 blockerBottomHeight = 5;
 blockerTopHeight = 38;
 farCornerRadius = 6;
 bottomInset = 3;
+thickness = 1;
 $fn = 100;
 
 module rrCylinder(width, length, height, scale = 1) {
@@ -15,19 +16,30 @@ module rrCylinder(width, length, height, scale = 1) {
   }
 }
 
-module blocker(width, length) {
+module blockerShape(width, length) {
   topWidth = width - 0.5;
   bottomWidth = width - bottomInset * 2;
-  widthScale = bottomWidth / topWidth;
-  lengthScale = (length - bottomInset) / length;
-  scale = min(widthScale, lengthScale);
-  union() {
-    translate([0, 0, blockerBottomHeight])
+  
+  scale = min(bottomWidth / topWidth, 1 - bottomInset / length);
+  
+  translate([0, -length/2, blockerBottomHeight]) {
+    // bottom
     rotate([0, 180, 0])
     rrCylinder(topWidth, length, blockerBottomHeight, scale);
     // top
-    translate([0, 0, blockerBottomHeight])
-      rrCylinder(topWidth, length, blockerTopHeight);
+    rrCylinder(topWidth, length, blockerTopHeight);
+  }
+}
+
+module blocker(width, length) {
+  difference() {
+    // outside of cup
+    blockerShape(width, length);
+    
+    // inside to remove
+    translate([0, 0, thickness])
+    scale([1 - thickness*2/width, 1 - thickness*2/length, 10])
+      blockerShape(width, length);
   }
 }
 
