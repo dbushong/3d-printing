@@ -2,7 +2,7 @@
 
 /* [Inner Dimensions] */
 // Thickness of laptop slot(s)
-laptopGaps = [25, 17];
+laptopGaps = [25, 19];
 
 /* [Outer Dimensions] */
 // Length of entire holder
