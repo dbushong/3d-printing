@@ -1,4 +1,4 @@
-mode = "saladForks"; // ["dinnerForks","teaspoons","tablespoons","saladForks"]
+mode = "dinnerForks"; // ["dinnerForks","teaspoons","tablespoons","saladForks"]
 blockerBottomHeight = 5;
 blockerTopHeight = 38;
 farCornerRadius = 6;
@@ -16,7 +16,8 @@ module rrCylinder(width, length, height, scale = 1) {
   }
 }
 
-module blockerShape(width, length) {
+
+module blockerShape(width, length, topHeight = blockerTopHeight) {
   topWidth = width - 0.5;
   bottomWidth = width - bottomInset * 2;
   
@@ -27,7 +28,7 @@ module blockerShape(width, length) {
     rotate([0, 180, 0])
     rrCylinder(topWidth, length, blockerBottomHeight, scale);
     // top
-    rrCylinder(topWidth, length, blockerTopHeight);
+    rrCylinder(topWidth, length, topHeight);
   }
 }
 
@@ -38,8 +39,9 @@ module blocker(width, length) {
     
     // inside to remove
     translate([0, 0, thickness])
-    scale([1 - thickness*2/width, 1 - thickness*2/length, 10])
-      blockerShape(width, length);
+      blockerShape(
+        width - thickness*2, length - thickness*2, blockerTopHeight+2
+      );
   }
 }
 
