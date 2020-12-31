@@ -1,8 +1,8 @@
 /* Parameterizable Vertical Laptop Holder */
 
 /* [Inner Dimensions] */
-// Thickness of laptop slot
-laptopGap = 25;
+// Thickness of laptop slot(s)
+laptopGaps = [25, 17];
 
 /* [Outer Dimensions] */
 // Length of entire holder
@@ -19,9 +19,17 @@ sideYRad = 61;
 sideZRad = 71;
 // Height of entire holder
 baseHeight = 45;
+// Thickness of center support tabs
+supportDepth = 6;
 
 /* [Hidden] */
 $fn = 400;
+
+function sum(v, i = 0, total = 0) =
+  i < len(v) ? sum(v, i + 1, total + v[i]) : total;
+
+totalGapDepth = (len(laptopGaps) - 1) * supportDepth + sum(laptopGaps);
+totalDepth = totalGapDepth + baseDepth * 2;
 
 module sideXCylinder() {
   // FIXME - parameterize properly
@@ -31,9 +39,9 @@ module sideXCylinder() {
 }
 
 module sideYCylinder() {
-  translate([baseWidth / 2, -1, sideYRad + floorHeight])
-    rotate([-90, 0, 0])
-      cylinder(h = baseDepth + 2, r = sideYRad);  
+  translate([baseWidth / 2, baseDepth + 1, sideYRad + floorHeight])
+    rotate([90, 0, 0])
+      cylinder(h = totalDepth + 2, r = sideYRad);  
 }
 
 module sideZCylinder() {
@@ -45,18 +53,35 @@ module side() {
   difference() {
     cube([baseWidth, baseDepth, baseHeight]);
     sideXCylinder();
-    sideYCylinder();
     sideZCylinder();
   }
 }
 
 module bottom() {
-  cube([baseWidth, laptopGap, floorHeight]);
+  cube([baseWidth, totalGapDepth, floorHeight]);
 }
 
-side();
-translate([baseWidth, -laptopGap, 0])
-  rotate([0, 0, 180])
+module separators() {
+  for (i = [0 : len(laptopGaps)-2]) {
+    gapDepth = sum([for (j = [0:i]) laptopGaps[j] + supportDepth]);
+    translate([0, -gapDepth, 1])
+      cube([baseWidth, supportDepth, baseHeight-1]);
+  }
+}
+
+difference() {
+  union() {
     side();
-translate([0, -laptopGap, 0])
-  bottom();
+    
+    translate([baseWidth, -totalGapDepth, 0])
+      rotate([0, 0, 180])
+        side();
+   
+    separators();
+    
+    translate([0, -totalGapDepth, 0])
+      bottom();
+  }
+  
+  sideYCylinder();
+}
