@@ -2,11 +2,11 @@
 
 /* [Inner Dimensions] */
 // Thickness of laptop slot(s)
-laptopGaps = [25, 19];
+laptopGaps = [25, 18];
 
 /* [Outer Dimensions] */
 // Length of entire holder
-baseWidth = 140;
+baseWidth = 160;
 // Thickness of holder sides at bottom
 baseDepth = 24;
 // Thickness of floor
