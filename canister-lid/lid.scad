@@ -1,11 +1,11 @@
 /* [Lid Cover] */
-capH = 1;
+capH = 2;
 
 /* [Lid] */
 lidDiam = 93;
-lidH = 6.75;
+lidH = 5.75;
 outerLip = 1.75;
-gasketGap = 5;
+gasketGap = 5.25;
 innerLip = 1;
 
 /* [Hinge] */
@@ -13,6 +13,7 @@ hingeW = 9.25;
 hingeD = 15;
 hingeHoleDiam = 3.5;
 hingeHoleInset = 4;
+hingeHoleZAdjust = 0.5;
 hingeMerge = 1;
 
 /* [Hook] */
@@ -53,7 +54,7 @@ union() {
       rotate([-90, 0, 0])
         cylinder(h = hingeD, d = lidH + capH);
     }
-    translate([hingeW - hingeHoleInset, -1, (lidH + capH) / 2])
+    translate([hingeW - hingeHoleInset, -1, (lidH + capH) / 2 + hingeHoleZAdjust])
     rotate([-90, 0, 0])
       cylinder(h = hingeD + 2, d = hingeHoleDiam);
   }
