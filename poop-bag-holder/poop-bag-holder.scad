@@ -1,5 +1,5 @@
 roundRectRad = 0.5;
-thickness = 3;
+thickness = 4;
 bigCircleDiam = 50;
 smallCircleDiam = 10;
 bagNeckGap = 5;
