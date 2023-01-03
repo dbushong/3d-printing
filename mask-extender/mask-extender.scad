@@ -6,7 +6,7 @@ shaftWidth = 5.25;
 // Width of wide parts (hook & loop)
 totalWidth = 20;
 // Length of entire extender
-totalLength = 170;
+totalLength = 160;
 // Length of loop for attaching one end
 loopLength = totalWidth * 2;
 // How much to round off sharp edges
