@@ -1,6 +1,6 @@
 /* [Dimensions] */
 // width of the entire chair when viewed from the front
-width = 56;
+width = 59;
 // depth of the entire chair, including the back
 depth = 56;
 // height of the back above the seat
