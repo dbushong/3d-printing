@@ -2,51 +2,50 @@
 
 /* [Binocular Dimensions] */
 // outside diameter of eyecup for tight fit
-binocEyecupWidth = 35;
+binocEyecupDiam = 34.5;
 // how deep you want eyecup brackets
-binocEyecupDepth = 17;
+binocEyecupDepth = 25;
 // how wide the lens is
-binocLensWidth = 15;
+binocLensDiam = 15;
 // binocClipDepth = 83;
 
 /* [Phone Dimensions] */
 // how wide your phone is when held vertically
-phoneWidth = 75;
+phoneWidth = 74.5;
 // how thick your phone is
 phoneThickness = 11.5;
 // distance from top of phone to lens center
-phoneLensHorizInset = 18;
+phoneLensHorizInset = 17.5;
 // distance from nearest side of phone to lens center
-phoneLensVertInset = 16;
+phoneLensVertInset = 16.5;
 
 /* [Bracket Settings] */
-// how deep the clips holding the other side should be
-phoneClipHeight = 7;
 // how thick you want most of the frame to be
-frameThickness = 0.8;
+frameThickness = 1.2;
 // how deep you want the pocket holding one side of phone
-pocketDepth = 10;
+pocketDepth = 13;
 
 /* [Hidden] */
 $fa = 1;
 $fs = 0.1;
-clipThickness = frameThickness * 2;
 
 module eyecup() {
-  cylinder(h=binocEyecupDepth, d=binocEyecupWidth + frameThickness * 2);
+  cylinder(h=binocEyecupDepth, d=binocEyecupDiam + frameThickness * 2);
 }
 
 module eyecupHole() {
-  cylinder(h=binocEyecupDepth + 1, d=binocEyecupWidth);
+  cylinder(h=binocEyecupDepth + 1, d=binocEyecupDiam);
 }
 
 module rightSide() {
-  // slide over to make room for left clip
+  // slide over to make room for left loop
   translate([
-    -(binocEyecupWidth/2 + frameThickness*2 + phoneLensHorizInset + 10),
+    -(binocEyecupDiam/2 + frameThickness*2 + phoneLensHorizInset + 10),
     0,
     0
-  ]) {
+  ]) 
+  rotate([0, -90, 0]) // lay flat for easier printing
+  {
     difference() {
       // nicely blended eyecup & phone pocket w/ no holes
       hull() {
@@ -56,12 +55,26 @@ module rightSide() {
           phoneWidth + frameThickness * 2,
           phoneThickness + frameThickness * 2
         ]);
+        
         // eyecup block
         translate([
           phoneLensHorizInset + frameThickness,
           phoneLensVertInset + frameThickness,
           phoneThickness + frameThickness * 2
         ]) eyecup();
+        
+        // flat plane at 0 to ensure flat print
+        translate([
+          0,
+          phoneLensVertInset + frameThickness - binocEyecupDiam / 6,
+          0
+        ]) {
+          cube([
+            frameThickness,
+            binocEyecupDiam / 3,
+            binocEyecupDepth + frameThickness*2 + phoneThickness
+          ]);
+        }
       }
       
       // hole for eyecup
@@ -84,8 +97,8 @@ module rightSide() {
       translate([
         phoneLensHorizInset + frameThickness,
         phoneLensVertInset + frameThickness,
-        phoneThickness - 1
-      ]) cylinder(h=frameThickness + 2, d=binocLensWidth*1.1);
+        phoneThickness + frameThickness - 1
+      ]) cylinder(h=frameThickness + 2, d=binocLensDiam*1.1);
     }
   }
 }
@@ -93,26 +106,25 @@ module rightSide() {
 module leftSide() {
   // slide over to leave gap from right frame
   translate([
-    binocEyecupWidth/2 + frameThickness + 10,
+    binocEyecupDiam/2 + frameThickness + 10,
     0,
     0
-  ]) {
+  ])
+  rotate([0, -90, 0]) // lay flat for printing
+  {
     difference() {
-      // nicely blended eyecup & clip block w/ no holes
+      // nicely blended eyecup & loop block w/ no holes
       hull() {
-        // center horizontally to match eyecup
-        translate([-pocketDepth/2, 0, 0]) {
-          // outer clip block
-          cube([
-            pocketDepth,
-            phoneWidth + clipThickness * 2,
-            phoneThickness + clipThickness + frameThickness
-          ]);
-        }
+        // outer loop block
+        cube([
+          pocketDepth,
+          phoneWidth + frameThickness * 2,
+          phoneThickness + frameThickness + frameThickness
+        ]);
         
         // eyecup block
         translate([
-          0,
+          binocEyecupDiam / 2 + frameThickness,
           phoneLensVertInset + frameThickness,
           phoneThickness + frameThickness * 2
         ]) eyecup();
@@ -120,35 +132,22 @@ module leftSide() {
       
       // hole for eyecup
       translate([
-        0,
+        binocEyecupDiam / 2 + frameThickness,
         phoneLensVertInset + frameThickness,
         phoneThickness + frameThickness + 1
       ]) eyecupHole();
       
-      // cut out phone hole in clip side to make loop
-      translate([-5 * pocketDepth, clipThickness, frameThickness]) {
+      // cut out phone hole in side to make loop
+      translate([-5 * pocketDepth, frameThickness, frameThickness]) {
         cube([
           pocketDepth * 10, // plenty to overshoot
           phoneWidth,
           phoneThickness
         ]);
       }
-        
-      // turn into clip instead of loop
-      translate([
-        -5 * pocketDepth,
-        phoneClipHeight + clipThickness,
-        -1
-      ]) {
-        cube([
-          pocketDepth * 10,
-          phoneWidth - phoneClipHeight * 2,
-          clipThickness + 2
-        ]);
-      }
     }
   }
 }
 
-leftSide();
+//leftSide();
 rightSide();
