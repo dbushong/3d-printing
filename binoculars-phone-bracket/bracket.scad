@@ -2,7 +2,7 @@
 
 /* [Binocular Dimensions] */
 // outside diameter of eyecup for tight fit
-binocEyecupDiam = 33.5;
+binocEyecupDiam = 32.5;
 // how deep you want eyecup brackets
 binocEyecupDepth = 25;
 // how wide the lens is
@@ -40,7 +40,7 @@ module eyecupHole() {
 module rightSide() {
   // slide over to make room for left loop
   translate([
-    -(binocEyecupDiam/2 + frameThickness*2 + phoneLensHorizInset + 10),
+    -10,
     0,
     0
   ]) 
@@ -106,11 +106,11 @@ module rightSide() {
 module leftSide() {
   // slide over to leave gap from right frame
   translate([
-    binocEyecupDiam/2 + frameThickness + 10,
+    10,
     0,
-    0
+    phoneThickness + frameThickness
   ])
-  rotate([0, -90, 0]) // lay flat for printing
+  rotate([0, 90, 0]) // lay flat for printing
   {
     difference() {
       // nicely blended eyecup & loop block w/ no holes
@@ -119,12 +119,12 @@ module leftSide() {
         cube([
           pocketDepth,
           phoneWidth + frameThickness * 2,
-          phoneThickness + frameThickness + frameThickness
+          phoneThickness + frameThickness * 2
         ]);
         
         // eyecup block
         translate([
-          binocEyecupDiam / 2 + frameThickness,
+          pocketDepth - (binocEyecupDiam / 2 + frameThickness),
           phoneLensVertInset + frameThickness,
           phoneThickness + frameThickness * 2
         ]) eyecup();
@@ -132,7 +132,7 @@ module leftSide() {
       
       // hole for eyecup
       translate([
-        binocEyecupDiam / 2 + frameThickness,
+        pocketDepth - (binocEyecupDiam / 2 + frameThickness),
         phoneLensVertInset + frameThickness,
         phoneThickness + frameThickness + 1
       ]) eyecupHole();
