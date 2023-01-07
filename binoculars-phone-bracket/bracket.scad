@@ -2,7 +2,7 @@
 
 /* [Binocular Dimensions] */
 // outside diameter of eyecup for tight fit
-binocEyecupDiam = 34.5;
+binocEyecupDiam = 33.5;
 // how deep you want eyecup brackets
 binocEyecupDepth = 25;
 // how wide the lens is
@@ -21,7 +21,7 @@ phoneLensVertInset = 16.5;
 
 /* [Bracket Settings] */
 // how thick you want most of the frame to be
-frameThickness = 1.2;
+frameThickness = 1.4;
 // how deep you want the pocket holding one side of phone
 pocketDepth = 13;
 
@@ -149,5 +149,5 @@ module leftSide() {
   }
 }
 
-//leftSide();
+leftSide();
 rightSide();
