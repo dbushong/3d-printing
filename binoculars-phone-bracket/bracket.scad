@@ -2,9 +2,9 @@
 
 /* [Binocular Dimensions] */
 // outside diameter of eyecup for tight fit
-binocEyecupDiam = 32.5;
+binocEyecupDiam = 33.5;
 // how deep you want eyecup brackets
-binocEyecupDepth = 25;
+binocEyecupDepth = 19;
 // how wide the lens is
 binocLensDiam = 15;
 // binocClipDepth = 83;
