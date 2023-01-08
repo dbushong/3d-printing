@@ -25,6 +25,12 @@ frameThickness = 1.4;
 // how deep you want the pocket holding one side of phone
 pocketDepth = 13;
 
+/* [Print Options] */
+// print the extra support loop - skip for telescope/monocular
+printLeft = true;
+// print the lens-centering side
+printRight = true;
+
 /* [Hidden] */
 $fa = 1;
 $fs = 0.1;
@@ -149,5 +155,5 @@ module leftSide() {
   }
 }
 
-leftSide();
-rightSide();
+if (printLeft) leftSide();
+if (printRight) rightSide();
